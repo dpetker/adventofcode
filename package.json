@@ -1,0 +1,19 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "Solutions for Advent of Code 2015",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpetker/adventofcode.git"
+  },
+  "author": "dpetker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dpetker/adventofcode/issues"
+  },
+  "homepage": "https://github.com/dpetker/adventofcode#readme"
+}
