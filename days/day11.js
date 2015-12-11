@@ -1,4 +1,4 @@
-let part1Input = 'vzbxkghb';
+const INPUT = 'vzbxkghb';
 
 function generateNextPassword(current) {
   const charArray = current.split('');
@@ -30,7 +30,7 @@ function testPassword(pass) {
   return testInvalidChars(pass) && testCharRun(pass) && testPairs(pass);
 }
 
-let currPwd = generateNextPassword(part1Input);
+let currPwd = generateNextPassword(INPUT);
 while (!testPassword(currPwd)) {
   currPwd = generateNextPassword(currPwd);
 }
