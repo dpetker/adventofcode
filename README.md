@@ -1,4 +1,4 @@
-# Advent of Code - 2015
+# Advent of Code
 
 Solutions for [Advent of Code](http://adventofcode.com/), each subfolder being a different year.
 
