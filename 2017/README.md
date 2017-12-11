@@ -4,8 +4,8 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/).
 
 ## Usage Note
 
-This year I decided to try my hand at a functional language, [Elixir](http://elixir-lang.github.io/). Scripts can be run with the `elixir` interpreter, like so:
+Too much Rails has rotted my brain, so this year it's just pure Ruby. Examples can be run like so:
 
 ```sh
-$ elixir days/1.exs
+$ ruby days/1.rb
 ```
