@@ -26,8 +26,6 @@ def calculateChecksum(boxes):
 
   return num_twos * num_threes
 
-
-
 if __name__ == '__main__':
   with open(os.path.join(os.path.dirname(__file__), '../input/day2.txt'), 'r') as f:
     lines = f.readlines()
