@@ -26,13 +26,35 @@ def calculate_checksum(boxes):
 
   return num_twos * num_threes
 
+def calculate_common_id(boxes):
+  for i in range(0, len(boxes) - 1):
+    test_box = boxes[i]
+
+    for j in range(i + 1, len(boxes)):
+      second_box = boxes[j]
+
+      if len(test_box) != len(second_box):
+        continue
+
+      result = ""
+      for cursor in range(0, len(test_box)):
+        if test_box[cursor] == second_box[cursor]:
+          result += test_box[cursor]
+
+      if len(result) == len(test_box) - 1:
+        # Success condition, only one item was different in the two IDs
+        return result
+
+  return None
+
 if __name__ == '__main__':
   with open(os.path.join(os.path.dirname(__file__), '../input/day2.txt'), 'r') as f:
     lines = f.readlines()
     day2_input = [line.strip() for line in lines]
 
   checksum = calculate_checksum(day2_input)
-  # common_id =
+  common_id = calculate_common_id(day2_input)
 
   print(f"Checksum is: {checksum}")
+  print(f"The common ID is: {common_id}")
 
