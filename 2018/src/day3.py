@@ -31,6 +31,9 @@ class Fabric:
     # We'll calculate this as we apply claims
     self.num_overlapping_inches = 0
 
+    # Fully-intact claims
+    self.intact_claims = set()
+
   def apply_claims(self, claims):
     for claim in claims:
       width_required = claim.offset_left + claim.width
@@ -38,6 +41,8 @@ class Fabric:
 
       current_width = len(self.plane[0])
       current_height = len(self.plane)
+
+      self.intact_claims.add(claim.id)
 
       if (width_required > current_width) or (height_required > current_height):
         num_new_cols = width_required - current_width
@@ -66,7 +71,16 @@ class Fabric:
     for row in affected_rows:
       for col in range(claim.offset_left, claim.offset_left + claim.width):
         if row[col] != ".":
+          # we're no longer an intact claim
+          if claim.id in self.intact_claims:
+            self.intact_claims.remove(claim.id)
+
           if row[col] != "x":
+            # Remove the other claim from our list of intact claims
+            other_claim = int(row[col])
+            if other_claim in self.intact_claims:
+              self.intact_claims.remove(other_claim)
+
             row[col] = "x"
             self.num_overlapping_inches += 1
         else:
@@ -90,3 +104,4 @@ if __name__ == '__main__':
   fabric.apply_claims(day3_input)
 
   print(f"The number of overlapping square inches is: {fabric.num_overlapping_inches}")
+  print(f"The intact claim(s) are: {fabric.intact_claims}")
