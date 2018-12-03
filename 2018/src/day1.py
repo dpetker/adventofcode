@@ -3,7 +3,7 @@
 
 import os
 
-def calculateFrequency(change_list, current_freq, seen_freqs):
+def calculate_frequency(change_list, current_freq, seen_freqs):
   duplicate_freq = None
 
   for number in change_list:
@@ -21,11 +21,11 @@ if __name__ == '__main__':
     lines = f.readlines()
     day1_input = [int(line.strip()) for line in lines]
 
-  current_freq, seen_freqs, duplicate_freq = calculateFrequency(day1_input, 0, set())
+  current_freq, seen_freqs, duplicate_freq = calculate_frequency(day1_input, 0, set())
   result_freq = current_freq
 
   while duplicate_freq is None:
-    current_freq, seen_freqs, duplicate_freq = calculateFrequency(day1_input, current_freq, seen_freqs)
+    current_freq, seen_freqs, duplicate_freq = calculate_frequency(day1_input, current_freq, seen_freqs)
 
   print(f"Resulting Frequency is: {result_freq}")
   print(f"First duplicate Frequency is: {duplicate_freq}")

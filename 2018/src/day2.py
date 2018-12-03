@@ -3,7 +3,7 @@
 
 import os
 
-def calculateChecksum(boxes):
+def calculate_checksum(boxes):
   num_twos = 0
   num_threes = 0
 
@@ -31,7 +31,8 @@ if __name__ == '__main__':
     lines = f.readlines()
     day2_input = [line.strip() for line in lines]
 
-  checksum = calculateChecksum(day2_input)
+  checksum = calculate_checksum(day2_input)
+  # common_id =
 
   print(f"Checksum is: {checksum}")
 
