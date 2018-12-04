@@ -35,14 +35,26 @@ class Record:
 class CombinedRecord:
   def __init__(self, records):
     self.guard_id = records[0].guard_id
+    self.did_not_sleep = False
+    self.sleep_tuples = []
+
+    if len(records) == 1:
+      # Special case, did not sleep
+      self.did_not_sleep = True
+      self.month = records[0].date.month
+      self.day = records[0].date.day if records[0].date.minute == 0 else records[0].date.day + 1
+      return
+
     self.month = records[1].date.month
     self.day = records[1].date.day
 
-    self.sleep_tuples = []
     for i in range(1, len(records), 2):
       self.sleep_tuples.append((records[i].date.minute, records[i + 1].date.minute))
 
   def is_asleep(self, minute):
+    if self.did_not_sleep:
+      return False
+
     for sleepy_time in self.sleep_tuples:
       if minute >= sleepy_time[0] and minute < sleepy_time[1]:
         return True
