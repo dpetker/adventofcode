@@ -88,9 +88,13 @@ class GuardHistogram:
         if record.is_asleep(i):
           self.data[i] += 1
 
+  def max_tuple(self):
+    max_value = max(self.data)
+    max_index = self.data.index(max_value)
+    return (max_value, max_index)
+
   def most_likely_minute(self):
-    max_minutes_slept = max(self.data)
-    return self.data.index(max_minutes_slept)
+    return self.max_tuple()[1]
 
   def total_minutes_slept(self):
     return sum(self.data)
@@ -108,7 +112,7 @@ class Schedule:
     for guard_id, histogram in self.guard_histogram.items():
       print(f"#{guard_id} {histogram.data}")
 
-  def find_max_chance(self):
+  def find_max_chance_part_one(self):
     current_total_min_slept = 0
     current_histogram = None
     current_guard_id = None
@@ -120,6 +124,19 @@ class Schedule:
         current_guard_id = guard_id
 
     return (current_guard_id, current_histogram.most_likely_minute())
+
+  def find_max_chance_part_two(self):
+    current_max_tuple = (0, 0)
+    current_guard_id = None
+
+    for guard_id, histogram in self.guard_histogram.items():
+      check_tuple = histogram.max_tuple()
+
+      if check_tuple[0] > current_max_tuple[0]:
+        current_max_tuple = check_tuple
+        current_guard_id = guard_id
+
+    return (current_guard_id, current_max_tuple[1])
 
   def __combine_records(self, records):
     combined_records = []
@@ -170,6 +187,8 @@ if __name__ == '__main__':
     day4_input = [Record(line.strip()) for line in lines]
 
   schedule = Schedule(day4_input)
-  max_minutes_asleep = schedule.find_max_chance()
+  solution_part_one = schedule.find_max_chance_part_one()
+  solution_part_two = schedule.find_max_chance_part_two()
 
-  print(f"Your best chance is #{max_minutes_asleep[0]} at minute {max_minutes_asleep[1]} (Or, {max_minutes_asleep[0] * max_minutes_asleep[1]})")
+  print(f"Your best chance for Part One is #{solution_part_one[0]} at minute {solution_part_one[1]} (Or, {solution_part_one[0] * solution_part_one[1]})")
+  print(f"Your best chance for Part Two is #{solution_part_two[0]} at minute {solution_part_two[1]} (Or, {solution_part_two[0] * solution_part_two[1]})")
