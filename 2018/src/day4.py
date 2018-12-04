@@ -88,10 +88,12 @@ class GuardHistogram:
         if record.is_asleep(i):
           self.data[i] += 1
 
-  def max_tuple(self):
-    max_value = max(self.data)
-    max_index = self.data.index(max_value)
-    return (max_value, max_index)
+  def most_likely_minute(self):
+    max_minutes_slept = max(self.data)
+    return self.data.index(max_minutes_slept)
+
+  def total_minutes_slept(self):
+    return sum(self.data)
 
 class Schedule:
   def __init__(self, records):
@@ -107,17 +109,17 @@ class Schedule:
       print(f"#{guard_id} {histogram.data}")
 
   def find_max_chance(self):
-    current_max_tuple = (0, 0)
+    current_total_min_slept = 0
+    current_histogram = None
     current_guard_id = None
 
     for guard_id, histogram in self.guard_histogram.items():
-      check_tuple = histogram.max_tuple()
-
-      if check_tuple[0] > current_max_tuple[0]:
-        current_max_tuple = check_tuple
+      if histogram.total_minutes_slept() > current_total_min_slept:
+        current_total_min_slept = histogram.total_minutes_slept()
+        current_histogram = histogram
         current_guard_id = guard_id
 
-    return (current_guard_id, current_max_tuple[1])
+    return (current_guard_id, current_histogram.most_likely_minute())
 
   def __combine_records(self, records):
     combined_records = []
