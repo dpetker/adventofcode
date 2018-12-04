@@ -79,12 +79,45 @@ class CombinedRecord:
 
     return result + "\n"
 
+class GuardHistogram:
+  def __init__(self, combined_records):
+    self.data = [0] * 60
+
+    for record in combined_records:
+      for i in range(60):
+        if record.is_asleep(i):
+          self.data[i] += 1
+
+  def max_tuple(self):
+    max_value = max(self.data)
+    max_index = self.data.index(max_value)
+    return (max_value, max_index)
+
 class Schedule:
   def __init__(self, records):
     self.records = records
     self.records.sort(key = lambda record: record.date)
+    self.unique_guard_ids = set()
 
     self.combined_records = self.__combine_records(self.records)
+    self.guard_histogram = self.__create_histogram_by_guard(self.combined_records, self.unique_guard_ids)
+
+  def show_histogram(self):
+    for guard_id, histogram in self.guard_histogram.items():
+      print(f"#{guard_id} {histogram.data}")
+
+  def find_max_chance(self):
+    current_max_tuple = (0, 0)
+    current_guard_id = None
+
+    for guard_id, histogram in self.guard_histogram.items():
+      check_tuple = histogram.max_tuple()
+
+      if check_tuple[0] > current_max_tuple[0]:
+        current_max_tuple = check_tuple
+        current_guard_id = guard_id
+
+    return (current_guard_id, current_max_tuple[1])
 
   def __combine_records(self, records):
     combined_records = []
@@ -101,9 +134,23 @@ class Schedule:
     slices.append(records[prev_index:])
 
     for s in slices:
-      combined_records.append(CombinedRecord(s))
+      cr = CombinedRecord(s)
+      combined_records.append(cr)
+      self.unique_guard_ids.add(cr.guard_id)
 
     return combined_records
+
+  def __create_histogram_by_guard(self, combined_records, unique_guard_ids):
+    histogram = {}
+    for guard_id in unique_guard_ids:
+      relevant_records = []
+      for cr in combined_records:
+        if cr.guard_id == guard_id:
+          relevant_records.append(cr)
+
+      histogram[guard_id] = GuardHistogram(relevant_records)
+
+    return histogram
 
   def __str__(self):
     result = "Date   ID     Minute\n"
@@ -120,29 +167,7 @@ if __name__ == '__main__':
     lines = f.readlines()
     day4_input = [Record(line.strip()) for line in lines]
 
-  # sample_data = [
-  #   "[1518-11-01 00:00] Guard #10 begins shift",
-  #   "[1518-11-01 00:05] falls asleep",
-  #   "[1518-11-01 00:25] wakes up",
-  #   "[1518-11-01 00:30] falls asleep",
-  #   "[1518-11-01 00:55] wakes up",
-  #   "[1518-11-01 23:58] Guard #99 begins shift",
-  #   "[1518-11-02 00:40] falls asleep",
-  #   "[1518-11-02 00:50] wakes up",
-  #   "[1518-11-03 00:05] Guard #10 begins shift",
-  #   "[1518-11-03 00:24] falls asleep",
-  #   "[1518-11-03 00:29] wakes up",
-  #   "[1518-11-04 00:02] Guard #99 begins shift",
-  #   "[1518-11-04 00:36] falls asleep",
-  #   "[1518-11-04 00:46] wakes up",
-  #   "[1518-11-05 00:03] Guard #99 begins shift",
-  #   "[1518-11-05 00:45] falls asleep",
-  #   "[1518-11-05 00:55] wakes up"
-  # ]
-  # sample_data.reverse()
-
-  # day4_input = [Record(datum) for datum in sample_data]
-
   schedule = Schedule(day4_input)
+  max_minutes_asleep = schedule.find_max_chance()
 
-  print(schedule)
+  print(f"Your best chance is #{max_minutes_asleep[0]} at minute {max_minutes_asleep[1]} (Or, {max_minutes_asleep[0] * max_minutes_asleep[1]})")
