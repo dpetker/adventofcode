@@ -23,8 +23,26 @@ def react_polymer(polymer):
 
   return polymer
 
+def improve_polymer(polymer):
+  unique_units = set(polymer.lower())
+  shortest_result = polymer
+  current_count = 0
+
+  for unit in unique_units:
+    current_count += 1
+
+    print(f"Analyzing permutation {current_count}/{len(unique_units)}")
+
+    test_polymer = polymer.replace(unit, "").replace(unit.upper(), "")
+    result = react_polymer(test_polymer)
+
+    if len(result) < len(shortest_result):
+      shortest_result = result
+
+  return shortest_result
+
 if __name__ == '__main__':
-  print("Please run this via unittest:\n$ python -m unittest test/test_day5.py")
+  print("Please run this via unittest:\n$ python -m unittest -f test/test_day5.py")
 
 
 
