@@ -43,6 +43,3 @@ def improve_polymer(polymer):
 
 if __name__ == '__main__':
   print("Please run this via unittest:\n$ python -m unittest -f test/test_day5.py")
-
-
-
