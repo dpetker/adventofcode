@@ -26,16 +26,18 @@ class TestAssemblyInstructions(unittest.TestCase):
     self.assertEqual(result, "BDHNEGOLQASVWYPXUMZJIKRTFC")
 
   def test_sample_input_part_two(self):
-    self.assertEqual(find_path_in_parallel(SAMPLE_DATA, 2, 0), "CABFDE")
+    result, total_time = find_path_in_parallel(SAMPLE_DATA, 2, 0)
+    self.assertEqual(result, "CABFDE")
+    self.assertEqual(total_time, 15)
 
   def test_real_input_part_two(self):
     with open(os.path.join(os.path.dirname(__file__), '../input/day7.txt'), 'r') as f:
       lines = f.readlines()
       day7_input = [line.strip() for line in lines]
 
-    result = find_path_in_parallel(day7_input, 5, 60)
-    print(f"The correct order of steps for Part Two is {result}")
-    # self.assertEqual(result, "BDHNEGOLQASVWYPXUMZJIKRTFC")
+    result, total_time = find_path_in_parallel(day7_input, 5, 60)
+    print(f"The total time for Part Two is {total_time}s")
+    self.assertEqual(total_time, 1107)
 
 if __name__ == '__main__':
   unittest.main()

@@ -106,9 +106,9 @@ def find_path_in_parallel(steps, num_workers, time_offset):
   workers = [Worker(i) for i in range(num_workers)]
 
   complete_steps = []
-  ctr = 10000 # Just so we don't infinite loop
+  total_time = 0
 
-  while ai.steps and ctr > 0:
+  while ai.steps and total_time < 10000: # Just so we don't infinite loop
     # Step 1: tick all our workers, and check if any are free (and any)
     # work needs to be added to completed_steps
     free_workers = []
@@ -131,7 +131,7 @@ def find_path_in_parallel(steps, num_workers, time_offset):
           freebie.work.being_worked_on = True
           break
 
-    ctr -= 1
+    total_time += 1
 
   # Final step: Drain any workers that are still in progress
   in_progress_workers = []
@@ -140,16 +140,22 @@ def find_path_in_parallel(steps, num_workers, time_offset):
       in_progress_workers.append(worker)
 
   while in_progress_workers:
+    for worker in workers:
+      worker.tick()
+
     for i in range(len(in_progress_workers)):
       worker = in_progress_workers[i]
-      worker.tick()
       if worker.work_complete():
         completed_work = __handle_completed_work(worker)
         complete_steps.append(completed_work)
         in_progress_workers.pop(i)
         break
 
-  return "".join([s.id for s in complete_steps])
+    total_time += 1
+
+  # Subtract one to account for the last loop iteration where no work is actually
+  # done
+  return ("".join([s.id for s in complete_steps]), total_time - 1)
 
 if __name__ == '__main__':
   print("Please run this via unittest:\n$ python -m unittest -f test/test_day7.py")
