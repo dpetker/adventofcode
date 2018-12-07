@@ -4,7 +4,7 @@ import os
 
 class TestReactPolymer(unittest.TestCase):
   def test_sample_input(self):
-    self.skip("No sample data yet")
+    self.skipTest("No sample data yet")
 
 if __name__ == '__main__':
   unittest.main()
