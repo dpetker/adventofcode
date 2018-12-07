@@ -1,6 +1,6 @@
 import unittest
 import os
-from src.day7 import find_path
+from src.day7 import find_basic_path
 
 class TestReactPolymer(unittest.TestCase):
   def test_sample_input(self):
@@ -14,14 +14,14 @@ class TestReactPolymer(unittest.TestCase):
       "Step F must be finished before step E can begin."
     ]
 
-    self.assertEqual(find_path(sample_data), "CABDFE")
+    self.assertEqual(find_basic_path(sample_data), "CABDFE")
 
   def test_real_input_part_one(self):
     with open(os.path.join(os.path.dirname(__file__), '../input/day7.txt'), 'r') as f:
       lines = f.readlines()
       day7_input = [line.strip() for line in lines]
 
-    result = find_path(day7_input)
+    result = find_basic_path(day7_input)
     print(f"The correct order of steps is {result}")
     self.assertEqual(result, "BDHNEGOLQASVWYPXUMZJIKRTFC")
 

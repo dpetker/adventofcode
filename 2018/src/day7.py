@@ -22,13 +22,20 @@ class Step:
 
 class AssemblyInstructions:
   def __init__(self):
-    self.steps = {}
+    self.steps = []
 
   def step_for(self, id):
-    if id not in self.steps:
-      self.steps[id] = Step(id)
+    for step in self.steps:
+      if step.id == id:
+        return step
 
-    return self.steps[id]
+    new_step = Step(id)
+    self.steps.append(new_step)
+
+    # Keep steps sorted by ID
+    self.steps.sort(key = lambda step: step.id)
+
+    return new_step
 
   def __str__(self):
     result = ""
@@ -38,7 +45,7 @@ class AssemblyInstructions:
 
     return result
 
-def find_path(steps):
+def find_basic_path(steps):
   ai = AssemblyInstructions()
   for step in steps:
     tokens = step.split()
@@ -47,20 +54,17 @@ def find_path(steps):
 
     step.add_prereq(prereq)
 
-  incomplete_steps = list(ai.steps.keys())
-  incomplete_steps.sort()
-
   complete_steps = []
 
-  while incomplete_steps:
-    for i in range(len(incomplete_steps)):
-      test_step = ai.step_for(incomplete_steps[i])
+  while ai.steps:
+    for i in range(len(ai.steps)):
+      test_step = ai.steps[i]
       if test_step.can_complete():
         test_step.is_complete = True
-        complete_steps.append(incomplete_steps.pop(i))
+        complete_steps.append(ai.steps.pop(i))
         break
 
-  return "".join(complete_steps)
+  return "".join([s.id for s in complete_steps])
 
 if __name__ == '__main__':
   print("Please run this via unittest:\n$ python -m unittest -f test/test_day7.py")
