@@ -16,5 +16,14 @@ class TestReactPolymer(unittest.TestCase):
 
     self.assertEqual(find_path(sample_data), "CABDFE")
 
+  def test_real_input_part_one(self):
+    with open(os.path.join(os.path.dirname(__file__), '../input/day7.txt'), 'r') as f:
+      lines = f.readlines()
+      day7_input = [line.strip() for line in lines]
+
+    result = find_path(day7_input)
+    print(f"The correct order of steps is {result}")
+    self.assertEqual(result, "BDHNEGOLQASVWYPXUMZJIKRTFC")
+
 if __name__ == '__main__':
   unittest.main()
