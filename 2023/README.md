@@ -4,9 +4,22 @@ Solutions for [Advent of Code 2023](https://adventofcode.com/2023).
 
 ## Usage
 
-These solutions are built and run using [Kotlin](https://kotlinlang.org/). To build
-and run a given day's solution, use `run.sh` in this directory like so:
+### Kotlin
+
+Any [Kotlin](https://kotlinlang.org/) solutions can be built and run using the
+provided `run.sh`. To build and run a given day's solution:
 
 ```sh
-./run.sh 1 # will run Day 1's solution
+./run.sh <day #>
+
+# Example: will run Day 1's solution
+# ./run.sh 1
+```
+
+### Ruby
+
+Ruby solutions can be run directly:
+
+```sh
+ruby src/day1.rb
 ```
