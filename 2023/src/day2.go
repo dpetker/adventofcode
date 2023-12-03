@@ -15,33 +15,33 @@ type Game struct {
 	rounds []Round
 }
 
-func (g Game) is_possible(red int, green int, blue int) bool {
+func (g Game) IsPossible(red int, green int, blue int) bool {
 	for _, round := range g.rounds {
-		if !round.is_possible(red, green, blue) {
+		if !round.IsPossible(red, green, blue) {
 			return false
 		}
 	}
 	return true
 }
 
-func (g Game) min_needed() []int {
-	min_red, min_green, min_blue := 0, 0, 0
+func (g Game) MinNeeded() []int {
+	minRed, minGreen, minBlue := 0, 0, 0
 
 	for _, round := range g.rounds {
-		if round.red > min_red {
-			min_red = round.red
+		if round.red > minRed {
+			minRed = round.red
 		}
 
-		if round.green > min_green {
-			min_green = round.green
+		if round.green > minGreen {
+			minGreen = round.green
 		}
 
-		if round.blue > min_blue {
-			min_blue = round.blue
+		if round.blue > minBlue {
+			minBlue = round.blue
 		}
 	}
 
-	return []int{min_red, min_green, min_blue}
+	return []int{minRed, minGreen, minBlue}
 }
 
 type Round struct {
@@ -50,7 +50,7 @@ type Round struct {
 	blue  int
 }
 
-func (r Round) is_possible(red int, green int, blue int) bool {
+func (r Round) IsPossible(red int, green int, blue int) bool {
 	return (r.red <= red) && (r.green <= green) && (r.blue <= blue)
 }
 
@@ -58,36 +58,36 @@ type Day2 struct {
 	games []Game
 }
 
-func (d Day2) part_1() int {
-	min_red, min_green, min_blue := 12, 13, 14
+func (d Day2) Part1() int {
+	minRed, minGreen, minBlue := 12, 13, 14
 
-	id_total := 0
+	idTotal := 0
 	for _, game := range d.games {
-		if game.is_possible(min_red, min_green, min_blue) {
-			id_total += game.id
+		if game.IsPossible(minRed, minGreen, minBlue) {
+			idTotal += game.id
 		}
 	}
 
-	return id_total
+	return idTotal
 }
 
-func (d Day2) part_2() int {
+func (d Day2) Part2() int {
 	var minimums [][]int
-	sum_of_powers := 0
+	sumOfPowers := 0
 
 	for _, game := range d.games {
-		minimums = append(minimums, game.min_needed())
+		minimums = append(minimums, game.MinNeeded())
 	}
 
 	for _, mins := range minimums {
-		sum_of_powers += mins[0] * mins[1] * mins[2]
+		sumOfPowers += mins[0] * mins[1] * mins[2]
 	}
 
-	return sum_of_powers
+	return sumOfPowers
 }
 
-func create_round(round_input_str string) Round {
-	tokens := strings.Split(round_input_str, ",")
+func CreateRound(roundInputStr string) Round {
+	tokens := strings.Split(roundInputStr, ",")
 	red, green, blue := 0, 0, 0
 
 	for _, token := range tokens {
@@ -105,22 +105,22 @@ func create_round(round_input_str string) Round {
 	return Round{red, green, blue}
 }
 
-func create_game(game_line string) Game {
-	tokens := strings.Split(game_line, ":")
+func CreateGame(gameLine string) Game {
+	tokens := strings.Split(gameLine, ":")
 	id, _ := strconv.Atoi(strings.Split(strings.TrimSpace(tokens[0]), " ")[1])
 	var rounds []Round
 
 	for _, round_str := range strings.Split(tokens[1], ";") {
-		rounds = append(rounds, create_round(round_str))
+		rounds = append(rounds, CreateRound(round_str))
 	}
 
 	return Game{id: id, rounds: rounds}
 }
 
-func create_day_2(lines []string) Day2 {
+func CreateDay2(lines []string) Day2 {
 	var games []Game
 	for _, line := range lines {
-		games = append(games, create_game(line))
+		games = append(games, CreateGame(line))
 	}
 
 	return Day2{games}
@@ -140,7 +140,7 @@ func main() {
 		lines = append(lines, scanner.Text())
 	}
 
-	day_2 := create_day_2(lines)
-	fmt.Println("Part 1 total:", day_2.part_1())
-	fmt.Println("Part 2 total:", day_2.part_2())
+	day_2 := CreateDay2(lines)
+	fmt.Println("Part 1 total:", day_2.Part1())
+	fmt.Println("Part 2 total:", day_2.Part2())
 }
