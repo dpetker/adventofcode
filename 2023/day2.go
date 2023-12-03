@@ -2,12 +2,11 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"adventofcode/2023/internal"
 )
 
 type Game struct {
@@ -127,20 +126,7 @@ func CreateDay2(lines []string) Day2 {
 }
 
 func main() {
-	file, err := os.Open("./input/day2.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	var lines []string
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	day_2 := CreateDay2(lines)
+	day_2 := CreateDay2(internal.ReadPuzzleInput("./input/day2.txt"))
 	fmt.Println("Part 1 total:", day_2.Part1())
 	fmt.Println("Part 2 total:", day_2.Part2())
 }
