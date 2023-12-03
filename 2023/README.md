@@ -23,3 +23,11 @@ Ruby solutions can be run directly:
 ```sh
 ruby src/day1.rb
 ```
+
+### Go
+
+Golang solutions can also be run directly:
+
+```sh
+go run src/day2.go
+```

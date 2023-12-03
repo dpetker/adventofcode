@@ -1,24 +1,11 @@
 class Game
   attr_reader :id
   attr_reader :rounds
-  attr_reader :red
-  attr_reader :green
-  attr_reader :blue
 
   def initialize(game_line)
     tokens = game_line.split(':')
     @id = tokens[0].sub('Game ', '').to_i
     @rounds = tokens[1].split(';').map {|token| Round.new(token.strip)}
-
-    @red = 0
-    @green = 0
-    @blue = 0
-
-    @rounds.each do |round|
-      @red += round.red
-      @green += round.green
-      @blue += round.blue
-    end
   end
 
   def possible?(red, green, blue)
