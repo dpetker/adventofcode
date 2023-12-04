@@ -6,12 +6,19 @@ Solutions for [Advent of Code 2023](https://adventofcode.com/2023).
 
 ### Ruby
 
+**Note:** This section assumes you've run `bundle install`
+
 Ruby solutions can be run directly:
 
 ```sh
 ruby day1.rb
 ```
 
+To run the full suite, use `rspec`:
+
+```sh
+bundle exec rspec
+```
 
 ## Archive
 
