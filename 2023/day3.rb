@@ -24,7 +24,12 @@ class Engine
       nums = line.scan(/(?:\d+|.)/)
 
       matrix << nums.each_with_object([]) do |num, row|
-        num.length.times { |_| row << num }
+        num_repeats = num.length
+        if num.scan(/^\d+$/).first
+          num = Part.new(num)
+        end
+
+        num_repeats.times { |_| row << num }
         row
       end
 
@@ -36,9 +41,11 @@ class Engine
     accum = []
     @schematic.each_with_index do |row, row_index|
       row.each_with_index do |piece, col_index|
-        next if not piece.scan(/^\d+$/).first
+        next if not piece.instance_of? Part
 
-        accum << piece if has_connection?(row_index, col_index)
+        if has_connection?(row_index, col_index) and not accum.include? piece
+          accum << piece
+        end
       end
     end
 
@@ -46,8 +53,28 @@ class Engine
   end
 
   def has_connection?(row, col)
-    false
+    # top-left: row - 1, col - 1
+
+    # top: row - 1, col
+
+    # top-right: row - 1, col + 1
+
+    # right: row, col + 1
+
+    # bottom-right: row + 1, col + 1
+
+    # bottom: row + 1, col
+
+    # bottom-left: row + 1, col - 1
+
+    # left: row, col - 1
   end
 
   private :has_connection?
+end
+
+class Part
+  def initialize(part_str)
+    @id = part_str.to_i
+  end
 end
