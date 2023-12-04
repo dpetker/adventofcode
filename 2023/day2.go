@@ -2,11 +2,8 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
-
-	"adventofcode/2023/internal"
 )
 
 type Game struct {
@@ -123,10 +120,4 @@ func CreateDay2(lines []string) Day2 {
 	}
 
 	return Day2{games}
-}
-
-func main() {
-	day_2 := CreateDay2(internal.ReadPuzzleInput("./input/day2.txt"))
-	fmt.Println("Part 1 total:", day_2.Part1())
-	fmt.Println("Part 2 total:", day_2.Part2())
 }

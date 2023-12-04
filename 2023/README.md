@@ -10,6 +10,9 @@ Golang solutions can be run directly:
 go run day2.go
 ```
 
+Most files, though, are set up to be run via test suites. In that case, just
+invoke `go test`.
+
 ## Archive
 
 Some day 1 & 2 solutions were created with other languages, to use those solutions, do the following:
