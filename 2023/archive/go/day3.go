@@ -36,8 +36,8 @@ func CreateEngine(lines []string) Engine {
 	e := Engine{make(map[string][]int), []int{}}
 
 	runeTest := regexp.MustCompile(`^(\.|\d)$`)
-	for rowNum, line := range lines {
-		for colNum, val := range line {
+	for _, line := range lines {
+		for _, val := range line {
 			valAsStr := string(val)
 			if !runeTest.MatchString(valAsStr) {
 				_, ok := e.connectedParts[valAsStr]

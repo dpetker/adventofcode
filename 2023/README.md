@@ -4,14 +4,14 @@ Solutions for [Advent of Code 2023](https://adventofcode.com/2023).
 
 ## Usage
 
-Golang solutions can be run directly:
+### Ruby
+
+Ruby solutions can be run directly:
 
 ```sh
-go run day2.go
+ruby day1.rb
 ```
 
-Most files, though, are set up to be run via test suites. In that case, just
-invoke `go test`.
 
 ## Archive
 
@@ -29,10 +29,6 @@ provided `run.sh`. To build and run a given day's solution:
 # ./run.sh 1
 ```
 
-### Ruby
+### Go
 
-Ruby solutions can be run directly:
-
-```sh
-ruby src/day1.rb
-```
+Validate with `go test`.
