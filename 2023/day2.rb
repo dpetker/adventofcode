@@ -61,8 +61,8 @@ end
 
 
 class Day2
-  def initialize(input_lines)
-    @games = input_lines.map {|line| Game.new(line)}
+  def initialize()
+    @games = IO.readlines('./input/day2.txt').map {|line| Game.new(line)}
   end
 
   def part_1
@@ -79,6 +79,6 @@ class Day2
   end
 end
 
-day_2 = Day2.new(IO.readlines('./input/day2.txt'))
-puts "Part 1 total: #{day_2.part_1}"
-puts "Part 2 total: #{day_2.part_2}"
+# day_2 = Day2.new
+# puts "Part 1 total: #{day_2.part_1}"
+# puts "Part 2 total: #{day_2.part_2}"

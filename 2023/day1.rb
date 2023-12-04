@@ -21,8 +21,8 @@ class Day1
     '9' => 9
   }
 
-  def initialize(input_lines)
-    @input_lines = input_lines
+  def initialize()
+    @input_lines = IO.readlines("./input/day1.txt")
   end
 
   def part_1
@@ -48,6 +48,6 @@ class Day1
   end
 end
 
-day_1 = Day1.new(IO.readlines("./input/day1.txt"))
-puts "Part 1 total: #{day_1.part_1}" # Part 1 total: 54331
-puts "Part 2 total: #{day_1.part_2}" # Part 2 total: 54518
+# day_1 = Day1.new
+# puts "Part 1 total: #{day_1.part_1}" # Part 1 total: 54331
+# puts "Part 2 total: #{day_1.part_2}" # Part 2 total: 54518
