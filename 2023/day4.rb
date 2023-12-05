@@ -3,6 +3,7 @@ class Day4
     data_path = use_sample_data ? './input/day4_sample.txt' : './input/day4.txt'
     @data = IO.readlines(data_path)
     @cards = @data.map {|line| Card.new(line)}
+    @deck = Deck.new(@cards)
   end
 
   def part_1
@@ -10,6 +11,7 @@ class Day4
   end
 
   def part_2
+    @deck.add_copies.num_cards
   end
 end
 
@@ -35,6 +37,21 @@ class Card
   def num_matches
     @have_vals.intersection(@winning_vals).length
   end
+end
 
-  private :num_matches
+class Deck
+  def initialize(cards)
+    @cards = cards
+    @card_map = Hash.new
+
+    @cards.each {|card| @card_map[card.id] = [card, 1]}
+  end
+
+  def num_cards
+    0
+  end
+
+  def add_copies
+    self
+  end
 end
