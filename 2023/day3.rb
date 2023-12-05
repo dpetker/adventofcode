@@ -1,3 +1,5 @@
+require 'set'
+
 class Day3
   def initialize(use_sample_data=false)
     data_path = use_sample_data ? './input/day3_sample.txt' : './input/day3.txt'
@@ -39,14 +41,12 @@ class Engine
   end
 
   def find_connected_parts
-    accum = []
+    accum = Set[]
     @schematic.each_with_index do |row, row_index|
       row.each_with_index do |piece, col_index|
         next if not piece.instance_of? Part
 
-        if has_connection?(row_index, col_index) and not accum.include? piece
-          accum << piece
-        end
+        accum << piece if has_connection?(row_index, col_index)
       end
     end
 
@@ -55,6 +55,18 @@ class Engine
 
   def find_gear_ratios
     accum = []
+
+    @schematic.each_with_index do |row, row_index|
+      row.each_with_index do |piece, col_index|
+        next if not piece == "*"
+
+        connected_parts = get_parts_connected_to_gear(row_index, col_index).to_a
+
+        if connected_parts.length == 2
+          accum << connected_parts[0].to_i * connected_parts[1].to_i
+        end
+      end
+    end
 
     accum
   end
@@ -87,6 +99,36 @@ class Engine
     return false
   end
 
+  def get_parts_connected_to_gear(row, col)
+    accum = Set[]
+
+    # top-left
+    accum << @schematic[row - 1][col -1] if is_part?(row - 1, col - 1)
+
+    # top
+    accum << @schematic[row - 1][col] if is_part?(row - 1, col)
+
+    # top-right
+    accum << @schematic[row - 1][col + 1] if is_part?(row - 1, col + 1)
+
+    # right
+    accum << @schematic[row][col + 1] if is_part?(row, col + 1)
+
+    # bottom-right
+    accum << @schematic[row + 1][col + 1] if is_part?(row + 1, col + 1)
+
+    # bottom
+    accum << @schematic[row + 1][col] if is_part?(row + 1, col)
+
+    # bottom-left
+    accum << @schematic[row + 1][col - 1] if is_part?(row + 1, col - 1)
+
+    # left
+    accum << @schematic[row][col - 1] if is_part?(row, col - 1)
+
+    accum
+  end
+
   def is_symbol?(row, col)
     return false if row >= @schematic[0].length
     return false if col >= @schematic.length
@@ -98,7 +140,16 @@ class Engine
     return value.scan(/[^\d|^\.]/).length > 0
   end
 
-  private :has_connection?, :is_symbol?
+  def is_part?(row, col)
+    return false if row >= @schematic[0].length
+    return false if col >= @schematic.length
+
+    value = @schematic[row][col]
+
+    return value.instance_of? Part
+  end
+
+  private :has_connection?, :is_symbol?, :is_part?
 end
 
 class Part

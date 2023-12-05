@@ -24,5 +24,12 @@ describe Day3 do
         expect(d3.part_1).to eq(530495)
       end
     end
+
+    describe "part_2" do
+      it "should come up with 80253814" do
+        d3 = Day3.new()
+        expect(d3.part_2).to eq(80253814)
+      end
+    end
   end
 end
