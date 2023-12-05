@@ -11,6 +11,7 @@ class Day3
   end
 
   def part_2
+    Engine.new(@data).find_gear_ratios.sum
   end
 end
 
@@ -48,6 +49,12 @@ class Engine
         end
       end
     end
+
+    accum
+  end
+
+  def find_gear_ratios
+    accum = []
 
     accum
   end

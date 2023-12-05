@@ -8,6 +8,13 @@ describe Day3 do
         expect(d3.part_1).to eq(4361)
       end
     end
+
+    describe "part_2" do
+      it "should come up with 467835" do
+        d3 = Day3.new(use_sample_data=true)
+        expect(d3.part_2).to eq(467835)
+      end
+    end
   end
 
   describe "(actual data)" do
