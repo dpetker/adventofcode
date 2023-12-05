@@ -53,28 +53,53 @@ class Engine
   end
 
   def has_connection?(row, col)
-    # top-left: row - 1, col - 1
+    # top-left
+    return true if is_symbol?(row - 1, col - 1)
 
-    # top: row - 1, col
+    # top
+    return true if is_symbol?(row - 1, col)
 
-    # top-right: row - 1, col + 1
+    # top-right
+    return true if is_symbol?(row - 1, col + 1)
 
-    # right: row, col + 1
+    # right
+    return true if is_symbol?(row, col + 1)
 
-    # bottom-right: row + 1, col + 1
+    # bottom-right
+    return true if is_symbol?(row + 1, col + 1)
 
-    # bottom: row + 1, col
+    # bottom
+    return true if is_symbol?(row + 1, col)
 
-    # bottom-left: row + 1, col - 1
+    # bottom-left
+    return true if is_symbol?(row + 1, col - 1)
 
-    # left: row, col - 1
+    # left
+    return true if is_symbol?(row, col - 1)
+
+    return false
   end
 
-  private :has_connection?
+  def is_symbol?(row, col)
+    return false if row >= @schematic[0].length
+    return false if col >= @schematic.length
+
+    value = @schematic[row][col]
+
+    return false if value.instance_of? Part
+
+    return value.scan(/[^\d|^\.]/).length > 0
+  end
+
+  private :has_connection?, :is_symbol?
 end
 
 class Part
   def initialize(part_str)
     @id = part_str.to_i
+  end
+
+  def to_i
+    @id
   end
 end

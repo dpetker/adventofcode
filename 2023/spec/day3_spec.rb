@@ -9,4 +9,13 @@ describe Day3 do
       end
     end
   end
+
+  describe "(actual data)" do
+    describe "part_1" do
+      it "should come up with 530495" do
+        d3 = Day3.new()
+        expect(d3.part_1).to eq(530495)
+      end
+    end
+  end
 end
