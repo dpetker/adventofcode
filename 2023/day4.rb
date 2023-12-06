@@ -48,10 +48,21 @@ class Deck
   end
 
   def num_cards
-    0
+    @card_map.values.sum {|card_pair| card_pair[1]}
   end
 
   def add_copies
+    @cards.each do |card|
+      num_wins = card.num_matches
+      current_count = @card_map[card.id][1]
+
+      current_index = card.id
+      num_wins.times do
+        current_index += 1
+        @card_map[current_index][1] += current_count
+      end
+    end
+
     self
   end
 end

@@ -26,9 +26,9 @@ describe Day4 do
     end
 
     describe "part_2" do
-      it "should come up with nil" do
+      it "should come up with 5422730" do
         d4 = Day4.new()
-        expect(d4.part_2).to eq(nil)
+        expect(d4.part_2).to eq(5422730)
       end
     end
   end
